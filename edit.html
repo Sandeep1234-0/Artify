@@ -3,67 +3,150 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit Image</title>
     <style>
         /* Edit page styles */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
             color: #333;
             margin: 0;
             padding: 0;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            overflow: hidden;
+            flex-direction: column;
         }
 
         h1 {
-            margin-top: 30px;
+            margin-top: 10px;
             font-size: 36px;
             color: #FF7043;
+            text-align: center;
         }
 
+        .content-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 80%;
+        }
+
+        /* Left side for controls */
+        .controls {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 150px;
+        }
+
+        .control-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .controls input[type="range"] {
+            width: 100%;
+            max-width: 200px;
+            padding: 0;
+            margin: 5px 0;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .save-button,
+        .reset-button,
+        .download-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .save-button {
+            background-color: #FF7043;
+        }
+
+        .save-button:hover {
+            background-color: #FF5722;
+        }
+
+        .reset-button {
+            background-color: #666;
+        }
+
+        .reset-button:hover {
+            background-color: #444;
+        }
+
+        .download-button {
+            background-color: #4CAF50;
+        }
+
+        .download-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Right side for image */
         #image-container {
-            margin-top: 20px;
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         img {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             border-radius: 10px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, filter 0.2s ease;
         }
 
         img:hover {
             transform: scale(1.05);
         }
 
-        .controls {
-            margin-top: 30px;
+        /* Right side button section */
+        .action-buttons {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            gap: 20px;
         }
 
-        .controls input {
-            padding: 8px 12px;
-            font-size: 14px;
-            margin: 5px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .save-button {
-            margin-top: 20px;
-            padding: 12px 20px;
-            background-color: #FF7043;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .save-button:hover {
-            background-color: #FF5722;
-        }
     </style>
 </head>
 
@@ -71,37 +154,166 @@
 
     <h1>Edit Image</h1>
 
-    <div id="image-container">
-        <img id="image-to-edit" src="" alt="Image to edit">
-    </div>
+    <div class="content-container">
+        <!-- Left side: Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="brightness">Brightness:</label>
+                <input type="range" id="brightness" min="0" max="200" value="100">
+            </div>
+            <div class="control-group">
+                <label for="contrast">Contrast:</label>
+                <input type="range" id="contrast" min="0" max="200" value="100">
+            </div>
+            <div class="control-group">
+                <label for="saturation">Saturation:</label>
+                <input type="range" id="saturation" min="0" max="200" value="100">
+            </div>
+            <div class="control-group">
+                <label for="blur">Blur:</label>
+                <input type="range" id="blur" min="0" max="10" value="0" step="0.1">
+            </div>
+            <div class="control-group">
+                <label for="sepia">Sepia:</label>
+                <input type="range" id="sepia" min="0" max="100" value="0">
+            </div>
+            <div class="control-group">
+                <label for="rotation">Rotation:</label>
+                <input type="range" id="rotation" min="0" max="360" value="0">
+            </div>
+        </div>
 
-    <div class="controls">
-        <label for="brightness">Brightness:</label>
-        <input type="range" id="brightness" min="0" max="200" value="100">
-    </div>
+        <!-- Right side: Image Container -->
+        <div id="image-container">
+            <img id="image-to-edit" src="" alt="Image to edit">
+        </div>
 
-    <button class="save-button" onclick="saveImage()">Save Changes</button>
+        <!-- Right side: Action Buttons -->
+        <div class="action-buttons">
+            <button class="save-button" onclick="saveImage()">Save Changes</button>
+            <button class="reset-button" onclick="resetFilters()">Reset</button>
+            <button class="download-button" onclick="downloadImage()">Download Image</button>
+        </div>
+        
+    </div>
 
     <script>
-        // Get the image URL from the query string
+        // Get the image URL and search term from the query string
         const params = new URLSearchParams(window.location.search);
         const imageUrl = decodeURIComponent(params.get("imageUrl"));
+        const searchTerm = decodeURIComponent(params.get("searchTerm") || "edited-image"); // Fallback to "edited-image" if no search term
 
         // Display the image
         const imageElement = document.getElementById("image-to-edit");
         imageElement.src = imageUrl;
 
-        // Add functionality for adjusting brightness
+        // Filter controls
         const brightnessInput = document.getElementById("brightness");
-        brightnessInput.addEventListener("input", function () {
-            imageElement.style.filter = `brightness(${brightnessInput.value}%)`;
+        const contrastInput = document.getElementById("contrast");
+        const saturationInput = document.getElementById("saturation");
+        const blurInput = document.getElementById("blur");
+        const sepiaInput = document.getElementById("sepia");
+        const rotationInput = document.getElementById("rotation");
+
+        // Apply filters dynamically
+        function applyFilters() {
+            const brightness = brightnessInput.value;
+            const contrast = contrastInput.value;
+            const saturation = saturationInput.value;
+            const blur = blurInput.value;
+            const sepia = sepiaInput.value;
+            const rotation = rotationInput.value;
+
+            imageElement.style.filter =
+                `brightness(${brightness}%) 
+         contrast(${contrast}%) 
+         saturate(${saturation}%) 
+         blur(${blur}px) 
+         sepia(${sepia}%)`;
+            imageElement.style.transform = `rotate(${rotation}deg)`;
+        }
+
+        // Add event listeners for all controls
+        [brightnessInput, contrastInput, saturationInput, blurInput, sepiaInput, rotationInput].forEach(input => {
+            input.addEventListener("input", applyFilters);
         });
 
-        // Save the changes (for demo purposes, this just logs to console)
-        function saveImage() {
-            console.log("Image saved with new brightness:", brightnessInput.value);
-            alert("Image saved!");
+        // Reset all filters to default values
+        function resetFilters() {
+            brightnessInput.value = 100;
+            contrastInput.value = 100;
+            saturationInput.value = 100;
+            blurInput.value = 0;
+            sepiaInput.value = 0;
+            rotationInput.value = 0;
+            applyFilters();
         }
+
+        // Save the changes (for demo purposes, logs to console)
+        function saveImage() {
+            const filters = {
+                brightness: brightnessInput.value,
+                contrast: contrastInput.value,
+                saturation: saturationInput.value,
+                blur: blurInput.value,
+                sepia: sepiaInput.value,
+                rotation: rotationInput.value
+            };
+            console.log("Image saved with filters:", filters);
+            alert("Image saved with applied filters!");
+        }
+
+        function downloadImage() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const imageElement = document.getElementById("image-to-edit");
+
+            const image = new Image();
+            image.crossOrigin = "Anonymous"; // Handle CORS if the image is from another domain
+            image.src = imageElement.src;
+
+            image.onload = function () {
+                // Set canvas size to match the image's natural dimensions
+                canvas.width = image.naturalWidth;
+                canvas.height = image.naturalHeight;
+
+                // Apply filters to the canvas
+                ctx.filter =
+                    `brightness(${brightnessInput.value}%) 
+             contrast(${contrastInput.value}%) 
+             saturate(${saturationInput.value}%) 
+             blur(${blurInput.value}px) 
+             sepia(${sepiaInput.value}%)`;
+
+                // Apply rotation
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate((rotationInput.value * Math.PI) / 180);
+                ctx.drawImage(image, -image.naturalWidth / 2, -image.naturalHeight / 2);
+                ctx.restore();
+
+                // Trigger download with dynamic filename
+                try {
+                    const link = document.createElement("a");
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = `${searchTerm}.png`; // Use search term as filename
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (error) {
+                    console.error("Download failed:", error);
+                    alert("Failed to download the image. Check the console for details.");
+                }
+            };
+
+            image.onerror = function () {
+                console.error("Failed to load image:", image.src);
+                alert("Error: Could not load the image for download. Ensure the image URL is valid and accessible.");
+            };
+        }
+
+        // Apply initial filters on load
+        applyFilters();
     </script>
 
 </body>

@@ -226,14 +226,15 @@
                 return;
             }
 
+            const searchTerm = searchBar.value.trim(); // Get the current search term
             let htmlContent = '';
             images.forEach(image => {
                 htmlContent += `
-                    <div class="image-container">
-                        <img src="${image.urls.regular}" alt="${image.alt_description}">
-                        <a href="edit.html?imageUrl=${encodeURIComponent(image.urls.regular)}" class="edit-button">Edit</a>
-                    </div>
-                `;
+            <div class="image-container">
+                <img src="${image.urls.regular}" alt="${image.alt_description}">
+                <a href="edit.html?imageUrl=${encodeURIComponent(image.urls.regular)}&searchTerm=${encodeURIComponent(searchTerm)}" class="edit-button">Edit</a>
+            </div>
+        `;
             });
             imageResult.innerHTML = htmlContent;
         }
